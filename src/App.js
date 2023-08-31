@@ -1,11 +1,14 @@
 import { NavBar } from "./components/NavBar/NavBar";
-import { ProductForm } from "./pages/ProductForm/ProductForm";
+import { Product } from "./pages/Product/Product";
 
 function App() {
   return (
     <div className="App">
       <NavBar />
-      <ProductForm/>
+      {/* <ProductForm/> */}
+      <Product/>
+      <Product/>
+      <Product/>
     </div>
   );
 }

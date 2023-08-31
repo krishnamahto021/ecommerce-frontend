@@ -1,0 +1,37 @@
+.product{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0.2rem;
+    padding: 0.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.productImage{
+    padding: 0.4rem;
+}
+
+.img{
+    height: 15rem;
+}
+
+.productAbout{
+    width: 35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: x-large;
+}
+
+.rating{
+    color: white;
+    fill: gold;
+}
+
+.productDescription{
+    width: 20rem;
+    font-size:large;
+    font-weight: 500;
+}
