@@ -1,14 +1,12 @@
-import { NavBar } from "./components/NavBar/NavBar";
-import { Product } from "./pages/Product/Product";
-
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <Product/>
-    </div>
-  );
+    <>
+      <RouterProvider router={router} />
+    </>
+  )
 }
 
 export default App;

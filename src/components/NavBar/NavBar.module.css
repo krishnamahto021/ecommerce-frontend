@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+    outline: none;
+}
 
 .navbar{
     display: flex;
