@@ -1,12 +1,12 @@
 import { NavBar } from "./components/NavBar/NavBar";
-import { Cart } from "./pages/Cart/Cart";
+import { Product } from "./pages/Product/Product";
 
 
 function App() {
   return (
     <div className="App">
       <NavBar />
-      <Cart/>
+      <Product/>
     </div>
   );
 }

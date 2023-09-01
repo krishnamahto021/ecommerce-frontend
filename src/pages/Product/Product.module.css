@@ -32,10 +32,24 @@
     fill: gold;
 }
 
-
-
 .productDescription{
     width: 20rem;
     font-size:large;
     font-weight: 500;
+}
+
+.addToCart{
+    line-height: 2rem;
+    padding: 0.2rem;
+    width: 8rem;
+    border-radius: 0.4rem;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+    background-color: #009cff;
+    border: none;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover{
+        border: 0.2rem solid white;
+    }
 }
