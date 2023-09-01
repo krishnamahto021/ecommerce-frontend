@@ -3,6 +3,7 @@ import { NavBar } from "./components/NavBar/NavBar";
 import { Product } from "./pages/Product/Product";
 import { Cart } from "./pages/Cart/Cart";
 import { ProductForm } from "./pages/ProductForm/ProductForm";
+import { ProductContainer } from "./pages/ProductContainer/ProductContainer";
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +12,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Product />
+        element: <ProductContainer />
       },
       {
         path: "/product",
