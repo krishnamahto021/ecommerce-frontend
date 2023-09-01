@@ -38,6 +38,13 @@
     font-weight: 500;
 }
 
+.actionButtons{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: space-around;
+}
+
 .addToCart{
     line-height: 2rem;
     padding: 0.2rem;
@@ -52,4 +59,26 @@
     &:hover{
         border: 0.2rem solid white;
     }
+}
+
+.outer{
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    &:hover{
+        border: 1px solid #009cff;
+    }
+
+
+}
+
+.edit{
+    padding: 0.5rem;
+    font-size: 2rem;
+
+}
+
+.delete{
+    padding: 0.5rem;
+    font-size: 2rem;
+
 }

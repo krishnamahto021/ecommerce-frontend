@@ -1,5 +1,7 @@
 import styles from "./Product.module.css";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { LuEdit2 } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
 
 export const Product = () => {
   function calculateRating(r) {
@@ -40,6 +42,13 @@ export const Product = () => {
         </div>
         <div className={styles.actionButtons}>
           <button className={styles.addToCart}>Add to Cart</button>
+          <div className={styles.outer}>
+            <LuEdit2 className={styles.edit} />
+          </div>
+
+          <div className={styles.outer}>
+            <MdDeleteOutline className={styles.delete} />
+          </div>
         </div>
       </div>
     </>
