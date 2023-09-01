@@ -1,0 +1,70 @@
+.container{
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8rem;
+}
+
+.productContainer{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.img{
+    height: 15rem;
+}
+
+.name{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.qty{
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+
+
+.actionButtons{
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.buyNow{
+    line-height: 2rem;
+    padding: 0.2rem;
+    width: 6rem;
+    border-radius: 0.4rem;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+    background-color: #009cff;
+    border: none;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover{
+        border: 0.2rem solid white;
+    }
+}
+
+.remove{
+    line-height: 2rem;
+    padding: 0.2rem;
+    width: 5rem;
+    border-radius: 0.4rem;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+    background-color:#f33b3beb;
+    border: none;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover{
+        border: 0.2rem solid white;
+    }
+}
