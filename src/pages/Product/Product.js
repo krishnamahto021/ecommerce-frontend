@@ -1,20 +1,20 @@
 import styles from "./Product.module.css";
-import {AiOutlineStar} from 'react-icons/ai';
-
-
+import { AiOutlineStar,AiFillStar } from "react-icons/ai";
 
 export const Product = () => {
-    // function calculateRating (r){
-    //     for(let i=0;i<r;i++){
-    //         return(
-    //             <>
-    //                         <AiOutlineStar className={styles.rating}/>
-
-    //             </>
-    //         )
-    //     }
-
-    // }
+  function calculateRating(r) {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      // Determine whether to use filled-star or AiOutlineStar based on the rating
+      if (i < r) {
+        stars.push(<AiFillStar className={`${styles.rating} ${styles['filled-star']}`} key={i} />);
+      } else {
+        stars.push(<AiOutlineStar className={styles.rating} key={i} />);
+      }
+    }
+    return stars;
+  }
+  
   return (
     <>
       <div className={styles.product}>
@@ -29,9 +29,7 @@ export const Product = () => {
           <div>Jordan 4</div>
           <div>&#8377; 4000</div>
           <div className={styles.productRating}>
-            <AiOutlineStar className={styles.rating}/>
-            <AiOutlineStar className={styles.rating}/>
-            <AiOutlineStar className={styles.rating}/>
+          {calculateRating(4)}
           </div>
         </div>
         <div className={styles.productDescription}>
