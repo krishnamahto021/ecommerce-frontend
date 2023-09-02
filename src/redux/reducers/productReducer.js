@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection, deleteDoc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import { toast } from "react-toastify";
 import { doc } from "firebase/firestore";
@@ -51,6 +57,20 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+// update from the database
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async (data, thunkAPI) => {
+    const productDocRef = doc(db, "products", data.id);
+    await updateDoc(productDocRef, {
+      name: data.name,
+      description: data.description,
+      price: data.price,
+    });
+    return data;
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: productArray,
@@ -69,17 +89,27 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     // so that we can set the initial state based on the fetch items
-    builder.addCase(fetchProduct.fulfilled, (state, actions) => {
-      // state = [...actions.payload];
-      // return state; // we can also do it but its not the best way as we are making extra copy
+    builder
+      .addCase(fetchProduct.fulfilled, (state, actions) => {
+        // state = [...actions.payload];
+        // return state; // we can also do it but its not the best way as we are making extra copy
 
-      return actions.payload; // return modified state
-    })
-    .addCase(deleteProduct.fulfilled,(state,actions)=>{ // delete the product
-      const deltedProductId = actions.payload;
-      return state.filter((p)=>p.id !== deltedProductId);
-    })
-    
+        return actions.payload; // return modified state
+      })
+
+      .addCase(deleteProduct.fulfilled, (state, actions) => {
+        // delete the product
+        const deltedProductId = actions.payload;
+        return state.filter((p) => p.id !== deltedProductId);
+      })
+
+      .addCase(updateProduct.fulfilled, (state, actions) => {
+        const { id, name, description, price } = actions.payload;
+        const updatedState = state.map((p) =>
+          p.id === id ? { ...p, name, description, price } : p
+        );
+        return updatedState;
+      });
   },
 });
 

@@ -22,7 +22,7 @@ export const ProductContainer = () => {
             name={p.name}
             url={p.url}
             rating={p.rating}
-            descrtiption={p.descrtiption}
+            description={p.description}
             price={p.price}
             id={p.id}
             key={i}

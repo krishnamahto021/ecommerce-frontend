@@ -8,8 +8,6 @@
     margin-top: 1rem;
 }
 
-
-
 .productImage{
     padding: 0.4rem;
 }
@@ -34,7 +32,7 @@
 
 .productDescription{
     width: 20rem;
-    font-size:large;
+    font-size:x-large;
     font-weight: 500;
 }
 
@@ -67,8 +65,6 @@
     &:hover{
         border: 1px solid #009cff;
     }
-
-
 }
 
 .edit{
@@ -81,4 +77,30 @@
     padding: 0.5rem;
     font-size: 2rem;
 
+}
+
+.save{
+    line-height: 2rem;
+    padding: 0.2rem;
+    width: 8rem;
+    border-radius: 0.4rem;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+    background-color: #009cff;
+    border: none;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover{
+        border: 0.2rem solid white;
+    }
+
+}
+
+.updateInput{
+    background-color:rgb(243, 242, 241);
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    height: 2rem;
+    width: 25rem;
+    font-size: large;
 }
