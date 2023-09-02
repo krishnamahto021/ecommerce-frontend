@@ -24,6 +24,7 @@ export const ProductContainer = () => {
             rating={p.rating}
             descrtiption={p.descrtiption}
             price={p.price}
+            id={p.id}
             key={i}
           />
         );

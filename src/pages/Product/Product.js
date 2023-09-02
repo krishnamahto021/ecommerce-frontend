@@ -2,9 +2,18 @@ import styles from "./Product.module.css";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { LuEdit2 } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../redux/reducers/productReducer";
 
 export const Product = (props) => {
-  const { name, url, price, rating, description } = props;
+  const { name, url, price, rating, description,id } = props;
+  const dispatch = useDispatch();
+
+  function handleDelete(){
+    dispatch(deleteProduct(id));
+
+  }
+  
   function calculateRating(r) {
     r = parseFloat(r); // so that the value of string converts to integer
     let stars = [];
@@ -43,7 +52,7 @@ export const Product = (props) => {
           </div>
 
           <div className={styles.outer}>
-            <MdDeleteOutline className={styles.delete} />
+            <MdDeleteOutline className={styles.delete}  onClick={handleDelete}/>
           </div>
         </div>
       </div>
