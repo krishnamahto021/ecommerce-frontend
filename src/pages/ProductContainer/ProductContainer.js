@@ -1,19 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../Product/Product";
-import { productSelector } from "../../redux/reducers/productReducer";
+import { fetchProduct, productSelector } from "../../redux/reducers/productReducer";
+import { useEffect } from "react";
+
 
 export const ProductContainer = () => {
-  // let productArray = [
-    // {
-    //   name: "Aj4",
-    //   url: "https://images.stockx.com/images/Air-Jordan-4-Retro-Messy-Room-GS-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1667976285",
-    //   price: "2500",
-    //   rating: "5",
-    //   descrtiption: "hi",
-    // },
-  // ];
+  const dispatch = useDispatch();
+
   let productArray = useSelector(productSelector);
-  console.log(useSelector(productSelector));
+
+  useEffect(()=>{
+    dispatch(fetchProduct());   
+  },[dispatch]);
+  
+
   return (    
     <>
       {productArray.map((p, i) => {

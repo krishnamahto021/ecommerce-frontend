@@ -1,28 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import { toast } from "react-toastify";
 
-const productArray = [
-  {
-    name: "Aj4",
-    url: "https://images.stockx.com/images/Air-Jordan-4-Retro-Messy-Room-GS-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1667976285",
-    price: "2500",
-    rating: "5",
-    descrtiption: "hi",
-  },
-];
+const productArray = [];
 
 // to add the product to the database
 export const addProductToDb = createAsyncThunk(
   "product/addProductToDb",
-  async (data,thunkAPI)=>{
-    try{
-    const docRef = collection(db,'products');
-    await addDoc(docRef,data);
-    toast.success("Product Added Successfully!! ");
-    }catch(err){
-      console.log("Error in adding product to firestore",err);
+  async (data, thunkAPI) => {
+    try {
+      const docRef = collection(db, "products");
+      await addDoc(docRef, data);
+      toast.success("Product Added Successfully!! ");
+    } catch (err) {
+      console.log("Error in adding product to firestore", err);
       toast.error("Product Not Added!");
     }
   }
@@ -31,11 +23,17 @@ export const addProductToDb = createAsyncThunk(
 // fetch product from the database
 export const fetchProduct = createAsyncThunk(
   "product/fetchProduct",
-  async(_,thunkAPI)=>{
-    
-
+  async (_, thunkAPI) => {
+    const docRef = collection(db, "products");
+    const snapShot = await getDocs(docRef);
+    console.log("K");
+    const products = snapShot.docs.map((p) => ({
+      id: p.id,
+      ...p.data(),
+    }));
+    return products;
   }
-)
+);
 
 const productSlice = createSlice({
   name: "product",
@@ -52,6 +50,14 @@ const productSlice = createSlice({
       };
       return [newProduct, ...state]; // avoid using state.push
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProduct.fulfilled, (state, actions) => {
+      // state = [...actions.payload];
+      // return state; // we can also do it but its not the best way as we are making extra copy
+
+      return actions.payload; // return modified state
+    });
   },
 });
 
