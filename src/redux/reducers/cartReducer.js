@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection, doc,updateDoc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../firebaseinit";
 
@@ -55,40 +62,71 @@ export const fetchCartProductFromDb = createAsyncThunk(
   }
 );
 
+// delete cart product from database
+export const deleteCartProductFromDb = createAsyncThunk(
+  "product/deleteCartProductFromDb",
+  async (data, thunkAPI) => {
+    try{
+
+      const { qty} = data;
+      const collectionRef = collection(db, "cart");
+      const snapShot = await getDocs(collectionRef);
+      const cartProductId = snapShot.docs.map((p)=>(p.id));
+      const cartProductRef = doc(db,'cart',cartProductId[0]);
+      if(qty>1){
+        updateDoc(cartProductRef,{
+          qty:qty-1
+        });
+      }else{
+      await deleteDoc(cartProductRef);
+      }
+    }catch(err){
+      console.log("Error in deleting product from cart",err);
+      toast.error("Error in Deleting Product from Cart!");
+    }
+      
+    
+  }
+);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     // add to cart
     addToCart: (state, action) => {
-      const { name, url, price ,id} = action.payload;
-      const existingProduct = state.find((p)=>p.id === id);
-      if(existingProduct){ // product is there 
+      const { name, url, price, id } = action.payload;
+      const existingProduct = state.find((p) => p.id === id);
+      if (existingProduct) {
+        // product is there
         console.log(existingProduct);
         const cartProduct = {
-            ...existingProduct,
-            qty:existingProduct.qty+1
-        }
-        return state.map((product) => (product.id === id ? cartProduct : product));
-      }else{
-      const cartProduct = { // product is not there
-        name,
-        price,
-        url,
-        id,
-        qty: 1,
-      };
+          ...existingProduct,
+          qty: existingProduct.qty + 1,
+        };
+        return state.map((product) =>
+          product.id === id ? cartProduct : product
+        );
+      } else {
+        const cartProduct = {
+          // product is not there
+          name,
+          price,
+          url,
+          id,
+          qty: 1,
+        };
 
-      return [cartProduct,...state];
-    }
+        return [cartProduct, ...state];
+      }
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCartProductFromDb.fulfilled, (state, action) => {
-      return action.payload; // return modified state
-    }); 
-
-      
+    builder
+      .addCase(fetchCartProductFromDb.fulfilled, (state, action) => {
+        return action.payload; // return modified state
+      })
+      .addCase(deleteCartProductFromDb.fulfilled, (state, action) => {});
   },
 });
 
