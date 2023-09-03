@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addDoc,
+  setDoc,
   collection,
   doc,
   updateDoc,
@@ -17,12 +18,13 @@ export const addCartProductToDb = createAsyncThunk(
   "product/addCartProductToDb",
   async (data, thunkAPI) => {
     try {
-      const { name, url, price, id } = data;
-      const docRef = collection(db, "cart");
-      const cartProductSnapshot = await getDocs(docRef);
+      const { id, name, url, price } = data; 
+      const docRef = doc(db, "cart", id); // Use 'id' for the document ID
+      const cartProductSnapshot = await getDocs(collection(db, "cart"));
       const existingProduct = cartProductSnapshot.docs.find(
         (p) => p.data().id === id.toString()
       );
+
       if (existingProduct) {
         const existingProductId = existingProduct.id;
         const existingProductData = existingProduct.data();
@@ -35,14 +37,14 @@ export const addCartProductToDb = createAsyncThunk(
           name,
           url,
           price,
-          id,
+          id, // Use 'id' as the document ID field
           qty: 1,
         };
-        await addDoc(docRef, newCartProduct);
+        await setDoc(docRef, newCartProduct); // Use 'setDoc' to set a document
         toast.success("New Product Added to Cart!");
       }
     } catch (err) {
-      console.log(`errror in adding product to the cart ${err}`);
+      console.log(`error in adding product to the cart ${err}`);
       toast.error("Cart Product Not Added!!");
     }
   }
@@ -66,26 +68,21 @@ export const fetchCartProductFromDb = createAsyncThunk(
 export const deleteCartProductFromDb = createAsyncThunk(
   "product/deleteCartProductFromDb",
   async (data, thunkAPI) => {
-    try{
-
-      const { qty} = data;
-      const collectionRef = collection(db, "cart");
-      const snapShot = await getDocs(collectionRef);
-      const cartProductId = snapShot.docs.map((p)=>(p.id));
-      const cartProductRef = doc(db,'cart',cartProductId[0]);
+    try {
+      const { qty, id } = data;
+      const cartProducts = doc(db,'cart',id);
       if(qty>1){
-        updateDoc(cartProductRef,{
+        await updateDoc(cartProducts,{
           qty:qty-1
-        });
+        })
       }else{
-      await deleteDoc(cartProductRef);
+        await deleteDoc(cartProducts);
+        
       }
-    }catch(err){
-      console.log("Error in deleting product from cart",err);
+    } catch (err) {
+      console.log("Error in deleting product from cart", err);
       toast.error("Error in Deleting Product from Cart!");
     }
-      
-    
   }
 );
 
