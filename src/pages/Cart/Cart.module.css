@@ -68,3 +68,9 @@
         border: 0.2rem solid white;
     }
 }
+
+.aboutCartProduct{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

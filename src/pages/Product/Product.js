@@ -3,9 +3,13 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { LuEdit2 } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { deleteProduct, updateProduct } from "../../redux/reducers/productReducer";
+import {
+  deleteProduct,
+  updateProduct,
+} from "../../redux/reducers/productReducer";
 
 import styles from "./Product.module.css";
+import { addCartProductToDb, addToCart } from "../../redux/reducers/cartReducer";
 
 export const Product = (props) => {
   const { name, url, price, rating, description, id } = props;
@@ -51,6 +55,11 @@ export const Product = (props) => {
     toggleShowForm();
   };
 
+  const handleAddToCart =()=>{
+    dispatch(addToCart({name,url,price}));
+    dispatch(addCartProductToDb({name,url,price}));
+  }
+
   return (
     <>
       <div className={styles.product}>
@@ -58,7 +67,8 @@ export const Product = (props) => {
           <img src={url} alt={name} className={styles.img} />
         </div>
         <div className={styles.productAbout}>
-          <div>{showForm ? (
+          <div>
+            {showForm ? (
               <input
                 type="text"
                 value={editedProduct.name}
@@ -91,9 +101,7 @@ export const Product = (props) => {
               `₹ ${price}`
             )}
           </div>
-          <div className={styles.productRating}>
-            {calculateRating(rating)}
-          </div>
+          <div className={styles.productRating}>{calculateRating(rating)}</div>
         </div>
         <div className={styles.productDescription}>
           {showForm ? (
@@ -113,7 +121,9 @@ export const Product = (props) => {
         </div>
         <div className={styles.actionButtons}>
           {showForm ? (
-            <button onClick={handleEdit} className={styles.save}>Save</button>
+            <button onClick={handleEdit} className={styles.save}>
+              Save
+            </button>
           ) : (
             <div className={styles.outer}>
               <LuEdit2 className={styles.edit} onClick={toggleShowForm} />
@@ -122,6 +132,10 @@ export const Product = (props) => {
           <div className={styles.outer}>
             <MdDeleteOutline className={styles.delete} onClick={handleDelete} />
           </div>
+        </div>
+
+        <div className={styles.cart}>
+          <button className={styles.addToCart} onClick={handleAddToCart}>Add</button>
         </div>
       </div>
     </>
