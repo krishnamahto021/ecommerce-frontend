@@ -2,16 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../Product/Product";
 import { fetchProduct, productSelector } from "../../redux/reducers/productReducer";
 import { useEffect } from "react";
+import { cartSelector, fetchCartProductFromDb } from "../../redux/reducers/cartReducer";
 
 
 export const ProductContainer = () => {
   const dispatch = useDispatch();
 
   let productArray = useSelector(productSelector);
+  let cartArray = useSelector(cartSelector);
 
   useEffect(()=>{
-    dispatch(fetchProduct());   
-  },[dispatch]);
+    dispatch(fetchProduct());  
+    dispatch(fetchCartProductFromDb()); 
+  },[dispatch,cartArray]);
   
 
   return (    

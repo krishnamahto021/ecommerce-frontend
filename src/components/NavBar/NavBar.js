@@ -2,8 +2,11 @@ import styles from "./NavBar.module.css";
 import { MdAddCircleOutline } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link, Outlet } from "react-router-dom";
+import { useSelector} from "react-redux";
+import { cartSelector } from "../../redux/reducers/cartReducer";
 
 export const NavBar = () => {
+  const cartArray = useSelector(cartSelector);
   return (
     <>
       <div className={styles.navbar}>
@@ -25,7 +28,7 @@ export const NavBar = () => {
           <Link to={"/cart"}>
             <AiOutlineShoppingCart className={styles.cartIcon} />
           </Link>
-          <span className={styles.cartCount}>5</span>
+          <span className={styles.cartCount}>{cartArray.length}</span>
         </div>
       </div>
       <Outlet />

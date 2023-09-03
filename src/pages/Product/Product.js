@@ -57,7 +57,7 @@ export const Product = (props) => {
 
   const handleAddToCart =()=>{
     dispatch(addToCart({name,url,price}));
-    dispatch(addCartProductToDb({name,url,price}));
+    dispatch(addCartProductToDb({name,url,price,id}));
   }
 
   return (

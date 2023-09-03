@@ -1,16 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import styles from "./Cart.module.css";
-import { cartSelector } from "../../redux/reducers/cartReducer";
+import { cartSelector, fetchCartProductFromDb } from "../../redux/reducers/cartReducer";
+import { useEffect } from "react";
 
 export const Cart = () => {
   let cartArray = useSelector(cartSelector);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(fetchCartProductFromDb());   
+  },[dispatch,cartArray]);
+
   return (
     <>
       <div className={styles.container}>
         {cartArray.map((cartProduct, i) => {
           return (
             <>
-              <div className={styles.productContainer}>
+              <div className={styles.productContainer} key={i}>
                 <div className={styles.image}>
                   <img
                     src={cartProduct.url}
@@ -22,9 +29,9 @@ export const Cart = () => {
 
                 <div className={styles.aboutCartProduct}>
                   <div className={styles.qty}>Price :  ₹ {cartProduct.price}</div>
-                  <div className={styles.qty}>Quantity : 4</div>
+                  <div className={styles.qty}>Quantity : {cartProduct.qty}</div>
                   <div className={styles.qty}>
-                    Total : ₹ {parseFloat(cartProduct.price) * parseFloat(4)}
+                    Total : ₹ {parseFloat(cartProduct.price) * parseFloat(cartProduct.qty)}
                   </div>
                 </div>
 
