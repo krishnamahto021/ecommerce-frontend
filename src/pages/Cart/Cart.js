@@ -1,6 +1,6 @@
 import { useDispatch,useSelector } from "react-redux";
 import styles from "./Cart.module.css";
-import { cartSelector, deleteCartProductFromDb, fetchCartProductFromDb } from "../../redux/reducers/cartReducer";
+import { cartSelector, deleteCartProductFromDb, fetchCartProductFromDb,deleteCartProduct } from "../../redux/reducers/cartReducer";
 import { useEffect } from "react";
 
 export const Cart = () => {
@@ -9,10 +9,11 @@ export const Cart = () => {
 
   useEffect(()=>{
     dispatch(fetchCartProductFromDb());   
-  },[dispatch,cartArray]);
+  },[dispatch]);
 
   const handleDelete = (data)=>{
     dispatch(deleteCartProductFromDb(data));
+    dispatch(deleteCartProduct(data));
   }
 
   return (

@@ -86,6 +86,11 @@ const productSlice = createSlice({
       };
       return [newProduct, ...state]; // avoid using state.push
     },
+    sortProduct:(state)=>{
+      const sortedArray = state.sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
+      console.log(sortedArray[0]);
+      return sortedArray;
+    }
   },
   extraReducers: (builder) => {
     // so that we can set the initial state based on the fetch items

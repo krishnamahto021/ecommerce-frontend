@@ -5,6 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useSelector} from "react-redux";
 import { cartSelector } from "../../redux/reducers/cartReducer";
 
+
 export const NavBar = () => {
   const cartArray = useSelector(cartSelector);
   return (

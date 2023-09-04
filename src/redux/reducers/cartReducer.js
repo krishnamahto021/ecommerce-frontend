@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  addDoc,
   setDoc,
   collection,
   doc,
@@ -117,16 +116,42 @@ const cartSlice = createSlice({
         return [cartProduct, ...state];
       }
     },
+    deleteCartProduct: (state, action) => {
+      const { qty, id } = action.payload;
+      const cartProductIndex = state.findIndex((p) => p.id === id);
+    
+      if (cartProductIndex !== -1) {
+        const updatedState = state.map((product) => {
+          if (product.id === id && qty > 1) {
+            return {
+              ...product,
+              qty: qty - 1,
+            };
+          }
+          return product;
+        });
+    
+        return qty > 1 ? updatedState : updatedState.filter((product) => product.id !== id);
+      }
+    
+      return state; // Return the original state if the product is not found
+    },
+    
+    
+    
+    
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartProductFromDb.fulfilled, (state, action) => {
         return action.payload; // return modified state
       })
-      .addCase(deleteCartProductFromDb.fulfilled, (state, action) => {});
+      .addCase(deleteCartProductFromDb.fulfilled(),(state,action)=>{
+
+      })
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart,deleteCartProduct} = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
 export const cartSelector = (state) => state.cartReducer;

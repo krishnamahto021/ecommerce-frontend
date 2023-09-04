@@ -3,6 +3,7 @@ import { Product } from "../Product/Product";
 import { fetchProduct, productSelector } from "../../redux/reducers/productReducer";
 import { useEffect } from "react";
 import { cartSelector, fetchCartProductFromDb } from "../../redux/reducers/cartReducer";
+import { Sort } from "../../components/Sort/Sort";
 
 
 export const ProductContainer = () => {
@@ -13,12 +14,16 @@ export const ProductContainer = () => {
 
   useEffect(()=>{
     dispatch(fetchProduct());  
+  },[dispatch]);
+
+  useEffect(()=>{
     dispatch(fetchCartProductFromDb()); 
   },[dispatch,cartArray]);
   
 
   return (    
     <>
+    <Sort/>
       {productArray.map((p, i) => {
         return (
           <Product
